@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Социальная Сеть</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* ШАПКА */
+        header {
+            background-color: #ff7700;
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            border-radius: 20px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: #fff;
+            border-radius: 50%;
+        }
+
+        /* НАВИГАЦИЯ */
+        nav {
+            background-color: white;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+        }
+
+        .nav-item {
+            text-align: center;
+            width: 100%;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #555;
+            font-weight: bold;
+            padding: 10px;
+            display: block;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #ff7700;
+        }
+
+        /* СЕКЦИИ */
+        section {
+            margin-bottom: 30px;
+            scroll-margin-top: 70px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #ff7700;
+            border-bottom: 2px solid #ff7700;
+            padding-bottom: 5px;
+        }
+
+        /* КАРТОЧКИ */
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        /* ПОСТ */
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .post-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ff9944;
+            margin-right: 10px;
+        }
+
+        .post-info h3 {
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+
+        .post-date {
+            color: #888;
+            font-size: 12px;
+        }
+
+        .post-content {
+            margin-bottom: 15px;
+        }
+
+        .post-image {
+            width: 100%;
+            height: 200px;
+            background-color: #eee;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: #555;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+
+        .action-btn:hover {
+            color: #ff7700;
+        }
+
+        .action-btn.liked {
+            color: #ff7700;
+        }
+
+        /* КОММЕНТАРИИ */
+        .comments {
+            margin-top: 15px;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+
+        .comment {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .comment-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #ff9944;
+            margin-right: 10px;
+        }
+
+        .comment-content {
+            background-color: #f0f2f5;
+            padding: 8px;
+            border-radius: 15px;
+            flex-grow: 1;
+        }
+
+        .comment-author {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .comment-form {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .comment-input {
+            flex-grow: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            margin-right: 10px;
+        }
+
+        .comment-btn {
+            background-color: #ff7700;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        /* СООБЩЕНИЯ */
+        .message {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .message-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ff9944;
+            margin-right: 15px;
+        }
+
+        .message-content {
+            flex-grow: 1;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .message-author {
+            font-weight: bold;
+        }
+
+        .message-time {
+            color: #888;
+            font-size: 12px;
+        }
+
+        /* УВЕДОМЛЕНИЯ */
+        .notification {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ff7700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 15px;
+        }
+
+        .notification-content {
+            flex-grow: 1;
+        }
+
+        .notification-time {
+            color: #888;
+            font-size: 12px;
+        }
+
+        /* ФОРМЫ */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .form-btn {
+            background-color: #ff7700;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* НАСТРОЙКИ */
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: #ff7700;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(26px);
+        }
+
+        /* ФУТЕР */
+        footer {
+            background-color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        .footer-links {
+            margin-bottom: 15px;
+        }
+
+        .footer-link {
+            color: #555;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .footer-link:hover {
+            color: #ff7700;
+        }
+
+        .copyright {
+            color: #888;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ШАПКА -->
+    <header>
+        <div class="header-content">
+            <div class="logo">Lesis</div>
+            <div class="search-bar">
+                <input type="text" placeholder="Поиск...">
+            </div>
+            <div class="user-avatar"></div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- НАВИГАЦИЯ -->
+        <nav>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="#posts" class="nav-link active">Лента друзей</a></li>
+                <li class="nav-item"><a href="#messages" class="nav-link">Сообщения</a></li>
+                <li class="nav-item"><a href="#notifications" class="nav-link">Уведомления</a></li>
+                <li class="nav-item"><a href="#account" class="nav-link">Редактирование профиля</a></li>
+                <li class="nav-item"><a href="#settings" class="nav-link">Настройки</a></li>
+            </ul>
+        </nav>
+
+        <!-- СТРАНИЦА 1: ПОСТЫ -->
+        <section id="posts">
+            <h2 class="section-title">Лента друзей</h2>
+
+            <!-- Пост 1 -->
+            <div class="card">
+                <div class="post-header">
+                    <div class="post-avatar"></div>
+                    <div class="post-info">
+                        <h3>Медина</h3>
+                        <div class="post-date">2 часа назад</div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p>Отличный день на природе с друзьями! Делюсь фотографиями с вами.</p>
+                </div>
+                <img src="https://box-catering.ua/wa-data/public/photos/45/12/1245/1245.970.jpg" class="post-image"
+                    alt="Фото поста">
+                <div class="post-actions">
+                    <button class="action-btn" onclick="this.classList.toggle('liked')">👍 Нравится (45)</button>
+                    <button class="action-btn">💬 Комментарии (12)</button>
+                    <button class="action-btn">↗️ Поделиться</button>
+                </div>
+                <div class="comments">
+                    <div class="comment">
+                        <div class="comment-avatar"></div>
+                        <div class="comment-content">
+                            <span class="comment-author">Лиза Пушкина:</span>
+                            <span>Выглядит круто! Где это?</span>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <div class="comment-avatar"></div>
+                        <div class="comment-content">
+                            <span class="comment-author">Анна Смирнова:</span>
+                            <span>Это парк "Сосновый бор", недалеко от города</span>
+                        </div>
+                    </div>
+                    <form class="comment-form">
+                        <input type="text" class="comment-input" placeholder="Напишите комментарий...">
+                        <button type="submit" class="comment-btn">Отправить</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Пост 2 -->
+            <div class="card">
+                <div class="post-header">
+                    <div class="post-avatar"></div>
+                    <div class="post-info">
+                        <h3>Василиса Ленина</h3>
+                        <div class="post-date">Вчера в 18:30</div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p>Наконец-то досмотрела "Слово пацана". Теперь ищу, что бы посмотреть дальше. Есть рекомендации?
+                    </p>
+                </div>
+                <div class="post-actions">
+                    <button class="action-btn" onclick="this.classList.toggle('liked')">👍 Нравится (23)</button>
+                    <button class="action-btn">💬 Комментарии (7)</button>
+                    <button class="action-btn">↗️ Поделиться</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- СТРАНИЦА 2: СООБЩЕНИЯ -->
+        <section id="messages">
+            <h2 class="section-title">Сообщения</h2>
+
+            <div class="card">
+                <div class="message">
+                    <div class="message-avatar"></div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <div class="message-author">Алексей Петров</div>
+                            <div class="message-time">10:30</div>
+                        </div>
+                        <p>Привет! Как насчет встречи сегодня вечером?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="message">
+                    <div class="message-avatar"></div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <div class="message-author">Елена Иванова</div>
+                            <div class="message-time">Вчера</div>
+                        </div>
+                        <p>Спасибо за информацию! Я перезвоню тебе позже.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="message">
+                    <div class="message-avatar"></div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <div class="message-author">Группа "Проект Адам"</div>
+                            <div class="message-time">2 дня назад</div>
+                        </div>
+                        <p>Коллеги, не забудьте про встречу завтра в 15:00!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- СТРАНИЦА 3: УВЕДОМЛЕНИЯ -->
+        <section id="notifications">
+            <h2 class="section-title">Уведомления</h2>
+
+            <div class="card">
+                <div class="notification">
+                    <div class="notification-icon">👍</div>
+                    <div class="notification-content">
+                        <p><strong>Мария Петрова</strong> поставила лайк вашей фотографии</p>
+                        <div class="notification-time">30 минут назад</div>
+                    </div>
+                </div>
+
+                <div class="notification">
+                    <div class="notification-icon">💬</div>
+                    <div class="notification-content">
+                        <p><strong>Павел Сидоров</strong> прокомментировал вашу запись</p>
+                        <div class="notification-time">2 часа назад</div>
+                    </div>
+                </div>
+
+                <div class="notification">
+                    <div class="notification-icon">🎂</div>
+                    <div class="notification-content">
+                        <p>У <strong>Анны Ивановой</strong> сегодня день рождения! Поздравьте её!</p>
+                        <div class="notification-time">Сегодня</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- СТРАНИЦА 4: ПРОФИЛЬ -->
+        <section id="account">
+            <h2 class="section-title">Редактирование профиля</h2>
+
+            <div class="card">
+                <form>
+                    <div class="form-group">
+                        <label class="form-label">Имя</label>
+                        <input type="text" class="form-input" value="Медина">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Фамилия</label>
+                        <input type="text" class="form-input" value="Теймурова">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" value="med@example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Телефон</label>
+                        <input type="tel" class="form-input" value="+7 (123) 456-78-90">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">О себе</label>
+                        <textarea class="form-input"
+                            rows="3">Люблю путешествовать, читать книги и проводить время с друзьями.</textarea>
+                    </div>
+
+                    <button type="submit" class="form-btn">Сохранить изменения</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- СТРАНИЦА 5: НАСТРОЙКИ -->
+        <section id="settings">
+            <h2 class="section-title">Настройки</h2>
+
+            <div class="card">
+                <div class="setting-item">
+                    <div>Уведомления о новых сообщениях</div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="setting-item">
+                    <div>Уведомления о лайках</div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="setting-item">
+                    <div>Уведомления о комментариях</div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="setting-item">
+                    <div>Уведомления о днях рождения</div>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="setting-item">
+                    <div>Темная тема</div>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- ФУТЕР / КОНТАКТЫ -->
+        <footer>
+            <div class="footer-links">
+                <a href="#" class="footer-link">О нас</a>
+                <a href="#" class="footer-link">Правила</a>
+                <a href="#" class="footer-link">Помощь</a>
+                <a href="#" class="footer-link">Контакты</a>
+            </div>
+            <div class="copyright">
+                © 2025 СоцСеть. Все права защищены.
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Простой JavaScript для переключения между разделами
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    // Убираем активный класс у всех ссылок
+                    navLinks.forEach(item => {
+                        item.classList.remove('active');
+                    });
+
+                    // Добавляем активный класс выбранной ссылке
+                    this.classList.add('active');
+
+                    // Скрываем все секции
+                    const sections = document.querySelectorAll('section');
+                    sections.forEach(section => {
+                        section.style.display = 'none';
+                    });
+
+                    // Показываем выбранную секцию
+                    const targetId = this.getAttribute('href').substring(1);
+                    document.getElementById(targetId).style.display = 'block';
+                });
+            });
+
+            // Показываем только первую секцию при загрузке
+            const sections = document.querySelectorAll('section');
+            sections.forEach((section, index) => {
+                if (index === 0) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
